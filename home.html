@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subsolo 13 — Industrial Tech Ritual</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --violet: #b56aff;
+      --accent: #6f33ff;
+      --neon: #00ffe0;
+      --dark: #050509;
+      --metal: #0d0e12;
+      --text: #e3e3e3;
+      --panel: rgba(255,255,255,0.04);
+    }
+
+    * { box-sizing: border-box; scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #020203, #090912 40%, #000 100%);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      background: rgba(10,10,15,0.9);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      z-index: 10;
+    }
+
+    header a {
+      color: var(--neon);
+      text-decoration: none;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 4px;
+      font-weight: 700;
+      text-shadow: 0 0 12px rgba(0,255,200,0.3);
+      transition: color .3s, text-shadow .3s;
+    }
+
+    header a:hover { color: var(--violet); text-shadow: 0 0 20px var(--violet); }
+    nav a { margin-left: 20px; color: var(--text); text-transform: uppercase; font-size: 13px; letter-spacing: 1px; transition: color 0.3s; }
+    nav a:hover { color: var(--neon); }
+
+    main { padding-top: 120px; text-align: center; z-index: 2; position: relative; }
+
+    .hero {
+      position: relative; height: 80vh; display: flex; align-items: center; justify-content: center; flex-direction: column;
+      overflow: hidden; background: radial-gradient(circle at center, rgba(0,255,200,0.04), transparent 60%);
+    }
+
+    .hero h1 {
+      font-family: 'Orbitron', sans-serif; font-size: 3.6rem; letter-spacing: 10px; color: var(--neon); text-transform: uppercase;
+      animation: fadeIn 3s ease; text-shadow: 0 0 20px rgba(0,255,200,0.6), 0 0 40px rgba(100,255,255,0.2);
+    }
+
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2.2rem; margin: 80px auto; width: 90%; max-width: 1200px;
+    }
+
+    .card {
+      background: var(--panel); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 20px; transition: all 0.4s ease;
+      box-shadow: 0 0 40px rgba(0,0,0,0.6); text-align: center; position: relative; overflow: hidden; cursor: pointer;
+    }
+
+    .card img { width: 100%; border-radius: 10px; margin-bottom: 18px; object-fit: cover; filter: brightness(0.92) contrast(1.08); transition: filter .4s ease; }
+    .card:hover img { filter: brightness(1.08) contrast(1.2); }
+    .card h3 { color: var(--neon); font-family: 'Orbitron', sans-serif; font-size: 1.1rem; margin-bottom: 10px; text-shadow: 0 0 10px rgba(0,255,200,0.3); }
+    .card p { color: #bbb; font-size: 0.9rem; }
+
+    footer { text-align: center; padding: 30px 0; border-top: 1px solid rgba(255,255,255,0.05); font-size: 14px; color: #777; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); }
+
+    /* Modal Ritual */
+    #modalRitual {
+      position: fixed; inset: 0; display: none; justify-content: center; align-items: center;
+      background: radial-gradient(circle at center, rgba(0,0,0,0.95), rgba(10,10,10,0.98));
+      z-index: 9999; overflow: hidden; animation: fadeIn .6s ease;
+    }
+
+    #modalRitual.active { display: flex; }
+
+    .ritual-container {
+      position: relative; text-align: center; animation: pulse 6s infinite alternate;
+    }
+
+    .ritual-product img {
+      max-width: 340px; border-radius: 12px; box-shadow: 0 0 40px rgba(181,106,255,0.25);
+      animation: floaty 5s ease-in-out infinite alternate;
+    }
+
+    .runa {
+      position: absolute; top: -120px; left: 50%; transform: translateX(-50%) rotate(0deg);
+      width: 200px; height: 200px; opacity: 0.6; animation: spinRuna 16s linear infinite, glowRuna 4s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 25px rgba(181,106,255,0.4));
+    }
+
+    @keyframes spinRuna { from { transform: translateX(-50%) rotate(0deg); } to { transform: translateX(-50%) rotate(360deg); } }
+    @keyframes glowRuna { from { opacity: 0.4; filter: drop-shadow(0 0 20px rgba(181,106,255,0.2)); } to { opacity: 0.8; filter: drop-shadow(0 0 35px rgba(111,51,255,0.5)); } }
+    @keyframes floaty { from { transform: translateY(0px); } to { transform: translateY(-20px); } }
+
+    .fog {
+      position: absolute; width: 200%; height: 200%; background: radial-gradient(circle, rgba(111,51,255,0.05) 0%, transparent 70%);
+      animation: fogFlow 20s linear infinite; pointer-events: none;
+    }
+
+    @keyframes fogFlow { from { transform: translate(-10%, -10%) scale(1); } to { transform: translate(10%, 10%) scale(1.2); } }
+
+    .ritual-text { font-family: 'Orbitron', sans-serif; letter-spacing: 4px; font-size: 1.2rem; margin: 30px 0; color: var(--violet); }
+
+    .ritual-buttons { display: flex; justify-content: center; gap: 20px; }
+
+    .ritual-buttons button {
+      background: linear-gradient(90deg, var(--violet), var(--accent)); color: #000; font-weight: 700;
+      border: none; border-radius: 8px; padding: 12px 24px; letter-spacing: 2px; text-transform: uppercase;
+      cursor: pointer; box-shadow: 0 0 20px rgba(181,106,255,0.3); transition: all .3s ease;
+    }
+
+    .ritual-buttons button:hover { box-shadow: 0 0 35px rgba(111,51,255,0.6); transform: scale(1.05); }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { from { filter: brightness(1); } to { filter: brightness(1.2); } }
+
+    canvas#particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background: transparent; }
+    audio { display: none; }
+  </style>
+</head>
+<body>
+  <canvas id="particles"></canvas>
+
+  <audio id="openSound" src="audio/ritual_glitch_open.mp3"></audio>
+  <audio id="confirmSound" src="audio/energy_confirm.mp3"></audio>
+  <audio id="closeSound" src="audio/veil_close.mp3"></audio>
+
+  <header>
+    <a href="#">SUBSOLO 13</a>
+    <nav>
+      <a href="#shop">Shop</a>
+      <a href="#manifesto">Manifesto</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Industrial Tech Ritual</h1>
+    </section>
+
+    <section id="shop" class="grid">
+      <div class="card"><img src="img/moletom recortado.png"><h3>Moletom Ritual Fragmentado</h3><p>Recortes assimétricos e símbolos costurados.</p></div>
+      <div class="card"><img src="img/calça pesada.png"><h3>Calça Industrial Leviathan</h3><p>Denim reforçado e ferragens múltiplas.</p></div>
+      <div class="card"><img src="img/moletom batman ksksk.png"><h3>Moletom Sanguíneo</h3><p>Asas integradas e tipografia vampírica.</p></div>
+      <div class="card"><img src="img/camisa de cruz.png"><h3>Camisa Cruzada</h3><p>Minimalismo gótico e fio metálico.</p></div>
+      <div class="card"><img src="img/camisa de sucubuss.png"><h3>Camisa Súcubo</h3><p>Ilustração sombria de invocação.</p></div>
+      <div class="card"><img src="img/calça de faixas.png"><h3>Calça de Contenção</h3><p>Correias e rebites — aprisionamento estético.</p></div>
+      <div class="card"><img src="img/jaqueta de inverno.png"><h3>Jaqueta Inverno Profano</h3><p>Forrada em pele sintética e símbolos ocultos.</p></div>
+      <div class="card"><img src="img/camisa de gravata.png"><h3>Camisa Gravata Rubra</h3><p>Contraste ritual entre pureza e sangue.</p></div>
+    </section>
+  </main>
+
+<!-- Ritual Modal -->
+<div id="modalProduto" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="modal-backdrop" id="modalBackdrop"></div>
+  <div class="modal-card glass-strong" role="document" aria-labelledby="modalNome">
+    
+    <div class="modal-media">
+      <img src="img/anfitras.png" alt="Símbolo Ritual Subsolo 13" class="ritual-symbol">
+    </div>
+    
+    <div class="modal-content">
+      <h3 id="modalNome" class="ritual-title">Camisa Cruzada</h3>
+      <p id="modalDesc" class="muted">Energia convergente</p>
+      
+      <div class="modal-actions">
+        <div class="modal-qty">
+          <span>Qtd</span>
+          <div class="qty-controls">
+            <button id="qtyMinus" class="qty-btn">−</button>
+            <span id="qtyValue">1</span>
+            <button id="qtyPlus" class="qty-btn">+</button>
+          </div>
+        </div>
+        <span id="modalPreco" class="modal-price">R$ 169,90</span>
+      </div>
+
+      <div class="modal-footer">
+        <button id="modalAdd" class="btn primary ritual-btn">Confirmar Invocação</button>
+        <button id="closeModal" class="btn ritual-close">Fechar o Véu</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <footer><small>© 2025 Subsolo 13 — Industrial Tech Ritual</small></footer>
+
+  <script>
+    const modal = document.getElementById('modalRitual');
+    const ritualImg = document.getElementById('ritual-img');
+    const openSound = document.getElementById('openSound');
+    const confirmSound = document.getElementById('confirmSound');
+    const closeSound = document.getElementById('closeSound');
+
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => {
+        ritualImg.src = card.querySelector('img').src;
+        modal.classList.add('active');
+        openSound.play();
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    document.getElementById('confirmRitual').addEventListener('click', () => {
+      confirmSound.play();
+      const flash = document.createElement('div');
+      flash.style.position='fixed';flash.style.inset='0';flash.style.background='radial-gradient(circle, rgba(111,51,255,0.4), transparent 70%)';
+      flash.style.zIndex='10000';flash.style.pointerEvents='none';flash.style.animation='fadeOut .6s forwards';
+      document.body.appendChild(flash);
+      setTimeout(()=>flash.remove(),600);
+    });
+
+    document.getElementById('closeRitual').addEventListener('click', () => {
+      closeSound.play();
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resize(){ canvas.width = innerWidth; canvas.height = innerHeight; }
+    function init(){ particles = []; for(let i=0;i<100;i++){ particles.push({ x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*2+0.5, dx:(Math.random()-0.5)*0.4, dy:(Math.random()-0.5)*0.4, c: Math.random()>0.5?'#b56aff':'#6f33ff' }); } }
+    function draw(){ ctx.clearRect(0,0,canvas.width,canvas.height); for(let p of particles){ ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=p.c; ctx.globalAlpha=0.6; ctx.fill(); p.x+=p.dx; p.y+=p.dy; if(p.x<0||p.x>canvas.width)p.dx*=-1; if(p.y<0||p.y>canvas.height)p.dy*=-1; } requestAnimationFrame(draw); }
+
+    window.addEventListener('resize',()=>{resize();init();}); resize(); init(); draw();
+  </script>
+</body>
+</html>
